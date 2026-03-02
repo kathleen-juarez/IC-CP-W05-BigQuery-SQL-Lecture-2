@@ -14,7 +14,7 @@ format:
     code-line-numbers: true
     code-link: true
     code-tools: true
-    number-sections: true
+    number-sections: false
     embed-resources: true
 execute: 
   freeze: auto
@@ -22,23 +22,72 @@ execute:
   warning: false
 ---
 
-## Quarto
+# 1. CTEs  (WITH) to structure logic
 
-Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
+```{sql connection=}
 
-## Running Code
-
-When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
-
-```{r}
-1 + 1
 ```
 
-You can add options to executable code like this
+# 2. Arrays + UNNEST
 
-```{r}
-#| echo: false
-2 * 2
+## Pattern A — Scalar subquery extraction (simple, safe)
+
+```{sql connection=}
+
 ```
 
-The `echo: false` option disables the printing of code (only output is displayed).
+### Pattern B — Flattening (UNNEST in FROM) for item-level analysis
+
+This *multiplies rows* (one event can have many items)
+
+```{sql connection=}
+
+```
+
+# 3. STRING_AGG, ARRAY_AGG (useful aggregations)
+
+**What they do:** combine many values into one row per group.
+
+### Example: Build a “session cart summary” (top items a user added to cart)
+
+## Use Case 1
+
+```{sql connection=}
+
+```
+
+## Use Case 2
+
+# 4.  Joins (start with INNER and LEFT)
+
+**What it does:** combines results based on matching keys.
+
+```{sql connection=}
+
+```
+
+# 5. Window functions + QUALIFY
+
+**What they do:** calculate “across rows” without collapsing to one row per group.
+
+### Top 3 event types per day (RANK) + QUALIFY
+
+```{sql connection=}
+
+```
+
+### Rolling 7-day average of daily purchases
+
+```{sql connection=}
+
+```
+
+# 6. Approximate functions (performance-minded)
+
+**What they do:** return “close enough” answers faster on huge datasets.
+
+### Approx distinct users per event type
+
+```{sql connection=}
+
+```
