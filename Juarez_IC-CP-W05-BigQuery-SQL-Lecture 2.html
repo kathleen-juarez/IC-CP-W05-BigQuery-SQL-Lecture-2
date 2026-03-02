@@ -2209,7 +2209,8 @@ vertical-align: -.125em;
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#ctes-with-to-structure-logic" id="toc-ctes-with-to-structure-logic" class="nav-link active" data-scroll-target="#ctes-with-to-structure-logic">1. CTEs (WITH) to structure logic</a>
+  <li><a href="#published-version-github-pages" id="toc-published-version-github-pages" class="nav-link active" data-scroll-target="#published-version-github-pages">Published Version (GitHub Pages)</a></li>
+  <li><a href="#ctes-with-to-structure-logic" id="toc-ctes-with-to-structure-logic" class="nav-link" data-scroll-target="#ctes-with-to-structure-logic">1. CTEs (WITH) to structure logic</a>
   <ul class="collapse">
   <li><a href="#explanation" id="toc-explanation" class="nav-link" data-scroll-target="#explanation">Explanation:</a></li>
   <li><a href="#this-query-creates-a-temporary-table-to-flag-whether-each-user-is-new.-it-then-counts-total-users-and-how-many-of-them-are-new-during-the-selected-date-range." id="toc-this-query-creates-a-temporary-table-to-flag-whether-each-user-is-new.-it-then-counts-total-users-and-how-many-of-them-are-new-during-the-selected-date-range." class="nav-link" data-scroll-target="#this-query-creates-a-temporary-table-to-flag-whether-each-user-is-new.-it-then-counts-total-users-and-how-many-of-them-are-new-during-the-selected-date-range.">This query creates a temporary table to flag whether each user is new. It then counts total users and how many of them are new during the selected date range.</a></li>
@@ -2300,6 +2301,7 @@ vertical-align: -.125em;
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
+  <li><a href="#published-version-github-pages" id="toc-published-version-github-pages">Published Version (GitHub Pages)</a></li>
   <li><a href="#ctes-with-to-structure-logic" id="toc-ctes-with-to-structure-logic">1. CTEs (WITH) to structure logic</a>
   <ul>
   <li><a href="#explanation" id="toc-explanation">Explanation:</a></li>
@@ -2347,6 +2349,10 @@ vertical-align: -.125em;
   </ul></li>
   </ul>
 </nav>
+<section id="published-version-github-pages" class="level1">
+<h1>Published Version (GitHub Pages)</h1>
+<p><a href="https://kathleen-juarez.github.io/IC-CP-W05-BigQuery-SQL-Lecture-2/Juarez_IC-CP-W05-BigQuery-SQL-Lecture%202.html">View the published HTML on GitHub Pages</a></p>
+</section>
 <section id="ctes-with-to-structure-logic" class="level1">
 <h1>1. CTEs (WITH) to structure logic</h1>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource sql number-lines code-with-copy"><code class="sourceCode sql"><span id="cb1-1"><a href="#cb1-1"></a># Lecture <span class="fl">2.1</span> — CTEs (<span class="kw">WITH</span>): Total users <span class="op">+</span> <span class="kw">new</span> users</span>
@@ -3091,300 +3097,304 @@ vertical-align: -.125em;
 <span id="cb11-20"><a href="#cb11-20"></a><span class="co">  warning: false</span></span>
 <span id="cb11-21"><a href="#cb11-21"></a><span class="co">---</span></span>
 <span id="cb11-22"><a href="#cb11-22"></a></span>
-<span id="cb11-23"><a href="#cb11-23"></a><span class="fu"># 1. CTEs (WITH) to structure logic</span></span>
+<span id="cb11-23"><a href="#cb11-23"></a><span class="fu"># Published Version (GitHub Pages)</span></span>
 <span id="cb11-24"><a href="#cb11-24"></a></span>
-<span id="cb11-25"><a href="#cb11-25"></a><span class="in">``` sql</span></span>
-<span id="cb11-26"><a href="#cb11-26"></a><span class="co"># Lecture 2.1 — CTEs (WITH): Total users + new users</span></span>
-<span id="cb11-27"><a href="#cb11-27"></a><span class="kw">WITH</span> UserInfo <span class="kw">AS</span> (</span>
-<span id="cb11-28"><a href="#cb11-28"></a>  <span class="kw">SELECT</span></span>
-<span id="cb11-29"><a href="#cb11-29"></a>    user_pseudo_id,</span>
-<span id="cb11-30"><a href="#cb11-30"></a>    <span class="fu">MAX</span>(<span class="cf">IF</span>(event_name <span class="kw">IN</span> (<span class="st">&#39;first_visit&#39;</span>, <span class="st">&#39;first_open&#39;</span>), <span class="dv">1</span>, <span class="dv">0</span>)) <span class="kw">AS</span> is_new_user</span>
-<span id="cb11-31"><a href="#cb11-31"></a>  <span class="kw">FROM</span> <span class="st">`bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`</span></span>
-<span id="cb11-32"><a href="#cb11-32"></a>  <span class="kw">WHERE</span> _TABLE_SUFFIX <span class="kw">BETWEEN</span> <span class="st">&#39;20201101&#39;</span> <span class="kw">AND</span> <span class="st">&#39;20201130&#39;</span></span>
-<span id="cb11-33"><a href="#cb11-33"></a>  <span class="kw">GROUP</span> <span class="kw">BY</span> user_pseudo_id</span>
-<span id="cb11-34"><a href="#cb11-34"></a>)</span>
-<span id="cb11-35"><a href="#cb11-35"></a><span class="kw">SELECT</span></span>
-<span id="cb11-36"><a href="#cb11-36"></a>  <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">AS</span> total_users,</span>
-<span id="cb11-37"><a href="#cb11-37"></a>  <span class="fu">SUM</span>(is_new_user) <span class="kw">AS</span> new_users</span>
-<span id="cb11-38"><a href="#cb11-38"></a><span class="kw">FROM</span> UserInfo;</span>
-<span id="cb11-39"><a href="#cb11-39"></a><span class="in">```</span></span>
-<span id="cb11-40"><a href="#cb11-40"></a></span>
-<span id="cb11-41"><a href="#cb11-41"></a><span class="al">![](images/query_1.png)</span></span>
-<span id="cb11-42"><a href="#cb11-42"></a></span>
-<span id="cb11-43"><a href="#cb11-43"></a><span class="fu">### Explanation: </span></span>
+<span id="cb11-25"><a href="#cb11-25"></a><span class="co">[</span><span class="ot">View the published HTML on GitHub Pages</span><span class="co">](https://kathleen-juarez.github.io/IC-CP-W05-BigQuery-SQL-Lecture-2/Juarez_IC-CP-W05-BigQuery-SQL-Lecture%202.html)</span></span>
+<span id="cb11-26"><a href="#cb11-26"></a></span>
+<span id="cb11-27"><a href="#cb11-27"></a><span class="fu"># 1. CTEs (WITH) to structure logic</span></span>
+<span id="cb11-28"><a href="#cb11-28"></a></span>
+<span id="cb11-29"><a href="#cb11-29"></a><span class="in">``` sql</span></span>
+<span id="cb11-30"><a href="#cb11-30"></a><span class="co"># Lecture 2.1 — CTEs (WITH): Total users + new users</span></span>
+<span id="cb11-31"><a href="#cb11-31"></a><span class="kw">WITH</span> UserInfo <span class="kw">AS</span> (</span>
+<span id="cb11-32"><a href="#cb11-32"></a>  <span class="kw">SELECT</span></span>
+<span id="cb11-33"><a href="#cb11-33"></a>    user_pseudo_id,</span>
+<span id="cb11-34"><a href="#cb11-34"></a>    <span class="fu">MAX</span>(<span class="cf">IF</span>(event_name <span class="kw">IN</span> (<span class="st">&#39;first_visit&#39;</span>, <span class="st">&#39;first_open&#39;</span>), <span class="dv">1</span>, <span class="dv">0</span>)) <span class="kw">AS</span> is_new_user</span>
+<span id="cb11-35"><a href="#cb11-35"></a>  <span class="kw">FROM</span> <span class="st">`bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`</span></span>
+<span id="cb11-36"><a href="#cb11-36"></a>  <span class="kw">WHERE</span> _TABLE_SUFFIX <span class="kw">BETWEEN</span> <span class="st">&#39;20201101&#39;</span> <span class="kw">AND</span> <span class="st">&#39;20201130&#39;</span></span>
+<span id="cb11-37"><a href="#cb11-37"></a>  <span class="kw">GROUP</span> <span class="kw">BY</span> user_pseudo_id</span>
+<span id="cb11-38"><a href="#cb11-38"></a>)</span>
+<span id="cb11-39"><a href="#cb11-39"></a><span class="kw">SELECT</span></span>
+<span id="cb11-40"><a href="#cb11-40"></a>  <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">AS</span> total_users,</span>
+<span id="cb11-41"><a href="#cb11-41"></a>  <span class="fu">SUM</span>(is_new_user) <span class="kw">AS</span> new_users</span>
+<span id="cb11-42"><a href="#cb11-42"></a><span class="kw">FROM</span> UserInfo;</span>
+<span id="cb11-43"><a href="#cb11-43"></a><span class="in">```</span></span>
 <span id="cb11-44"><a href="#cb11-44"></a></span>
-<span id="cb11-45"><a href="#cb11-45"></a><span class="fu">### This query creates a temporary table to flag whether each user is new. It then counts total users and how many of them are new during the selected date range.</span></span>
+<span id="cb11-45"><a href="#cb11-45"></a><span class="al">![](images/query_1.png)</span></span>
 <span id="cb11-46"><a href="#cb11-46"></a></span>
-<span id="cb11-47"><a href="#cb11-47"></a><span class="fu"># 2. Arrays + UNNEST</span></span>
+<span id="cb11-47"><a href="#cb11-47"></a><span class="fu">### Explanation: </span></span>
 <span id="cb11-48"><a href="#cb11-48"></a></span>
-<span id="cb11-49"><a href="#cb11-49"></a><span class="fu">## Pattern A — Scalar subquery extraction (simple, safe)</span></span>
+<span id="cb11-49"><a href="#cb11-49"></a><span class="fu">### This query creates a temporary table to flag whether each user is new. It then counts total users and how many of them are new during the selected date range.</span></span>
 <span id="cb11-50"><a href="#cb11-50"></a></span>
-<span id="cb11-51"><a href="#cb11-51"></a><span class="in">``` sql</span></span>
-<span id="cb11-52"><a href="#cb11-52"></a><span class="co"># Extract page_location from event_params</span></span>
-<span id="cb11-53"><a href="#cb11-53"></a><span class="kw">SELECT</span></span>
-<span id="cb11-54"><a href="#cb11-54"></a>  TIMESTAMP_MICROS(event_timestamp) <span class="kw">AS</span> event_time,</span>
-<span id="cb11-55"><a href="#cb11-55"></a>  (</span>
-<span id="cb11-56"><a href="#cb11-56"></a>    <span class="kw">SELECT</span> value<span class="ch">.</span>string_value</span>
-<span id="cb11-57"><a href="#cb11-57"></a>    <span class="kw">FROM</span> UNNEST(event_params)</span>
-<span id="cb11-58"><a href="#cb11-58"></a>    <span class="kw">WHERE</span> <span class="kw">key</span> <span class="op">=</span> <span class="st">&#39;page_location&#39;</span></span>
-<span id="cb11-59"><a href="#cb11-59"></a>    <span class="kw">LIMIT</span> <span class="dv">1</span></span>
-<span id="cb11-60"><a href="#cb11-60"></a>  ) <span class="kw">AS</span> page_location</span>
-<span id="cb11-61"><a href="#cb11-61"></a><span class="kw">FROM</span> <span class="st">`bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`</span></span>
-<span id="cb11-62"><a href="#cb11-62"></a><span class="kw">WHERE</span> event_name <span class="op">=</span> <span class="st">&#39;page_view&#39;</span></span>
-<span id="cb11-63"><a href="#cb11-63"></a>  <span class="kw">AND</span> _TABLE_SUFFIX <span class="kw">BETWEEN</span> <span class="st">&#39;20201201&#39;</span> <span class="kw">AND</span> <span class="st">&#39;20201202&#39;</span></span>
-<span id="cb11-64"><a href="#cb11-64"></a><span class="kw">LIMIT</span> <span class="dv">50</span>;</span>
-<span id="cb11-65"><a href="#cb11-65"></a><span class="in">```</span></span>
-<span id="cb11-66"><a href="#cb11-66"></a></span>
-<span id="cb11-67"><a href="#cb11-67"></a><span class="al">![](images/query_2A.png)</span></span>
-<span id="cb11-68"><a href="#cb11-68"></a></span>
-<span id="cb11-69"><a href="#cb11-69"></a><span class="fu">### Explanation:</span></span>
+<span id="cb11-51"><a href="#cb11-51"></a><span class="fu"># 2. Arrays + UNNEST</span></span>
+<span id="cb11-52"><a href="#cb11-52"></a></span>
+<span id="cb11-53"><a href="#cb11-53"></a><span class="fu">## Pattern A — Scalar subquery extraction (simple, safe)</span></span>
+<span id="cb11-54"><a href="#cb11-54"></a></span>
+<span id="cb11-55"><a href="#cb11-55"></a><span class="in">``` sql</span></span>
+<span id="cb11-56"><a href="#cb11-56"></a><span class="co"># Extract page_location from event_params</span></span>
+<span id="cb11-57"><a href="#cb11-57"></a><span class="kw">SELECT</span></span>
+<span id="cb11-58"><a href="#cb11-58"></a>  TIMESTAMP_MICROS(event_timestamp) <span class="kw">AS</span> event_time,</span>
+<span id="cb11-59"><a href="#cb11-59"></a>  (</span>
+<span id="cb11-60"><a href="#cb11-60"></a>    <span class="kw">SELECT</span> value<span class="ch">.</span>string_value</span>
+<span id="cb11-61"><a href="#cb11-61"></a>    <span class="kw">FROM</span> UNNEST(event_params)</span>
+<span id="cb11-62"><a href="#cb11-62"></a>    <span class="kw">WHERE</span> <span class="kw">key</span> <span class="op">=</span> <span class="st">&#39;page_location&#39;</span></span>
+<span id="cb11-63"><a href="#cb11-63"></a>    <span class="kw">LIMIT</span> <span class="dv">1</span></span>
+<span id="cb11-64"><a href="#cb11-64"></a>  ) <span class="kw">AS</span> page_location</span>
+<span id="cb11-65"><a href="#cb11-65"></a><span class="kw">FROM</span> <span class="st">`bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`</span></span>
+<span id="cb11-66"><a href="#cb11-66"></a><span class="kw">WHERE</span> event_name <span class="op">=</span> <span class="st">&#39;page_view&#39;</span></span>
+<span id="cb11-67"><a href="#cb11-67"></a>  <span class="kw">AND</span> _TABLE_SUFFIX <span class="kw">BETWEEN</span> <span class="st">&#39;20201201&#39;</span> <span class="kw">AND</span> <span class="st">&#39;20201202&#39;</span></span>
+<span id="cb11-68"><a href="#cb11-68"></a><span class="kw">LIMIT</span> <span class="dv">50</span>;</span>
+<span id="cb11-69"><a href="#cb11-69"></a><span class="in">```</span></span>
 <span id="cb11-70"><a href="#cb11-70"></a></span>
-<span id="cb11-71"><a href="#cb11-71"></a>This query pulls the page URL from the <span class="in">`event_params`</span> array for each page view. It shows when the event happened and which page was viewed.</span>
+<span id="cb11-71"><a href="#cb11-71"></a><span class="al">![](images/query_2A.png)</span></span>
 <span id="cb11-72"><a href="#cb11-72"></a></span>
-<span id="cb11-73"><a href="#cb11-73"></a><span class="fu">### Pattern B — Flattening (UNNEST in FROM) for item-level analysis</span></span>
+<span id="cb11-73"><a href="#cb11-73"></a><span class="fu">### Explanation:</span></span>
 <span id="cb11-74"><a href="#cb11-74"></a></span>
-<span id="cb11-75"><a href="#cb11-75"></a>This *multiplies rows* (one event can have many items)</span>
+<span id="cb11-75"><a href="#cb11-75"></a>This query pulls the page URL from the <span class="in">`event_params`</span> array for each page view. It shows when the event happened and which page was viewed.</span>
 <span id="cb11-76"><a href="#cb11-76"></a></span>
-<span id="cb11-77"><a href="#cb11-77"></a><span class="in">``` sql</span></span>
-<span id="cb11-78"><a href="#cb11-78"></a><span class="co"># Lecture 2.2B — UNNEST(items) to analyze item-level purchase activity</span></span>
-<span id="cb11-79"><a href="#cb11-79"></a><span class="kw">SELECT</span></span>
-<span id="cb11-80"><a href="#cb11-80"></a>  event_date,</span>
-<span id="cb11-81"><a href="#cb11-81"></a>  item<span class="ch">.</span>item_name,</span>
-<span id="cb11-82"><a href="#cb11-82"></a>  <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">AS</span> item_rows</span>
-<span id="cb11-83"><a href="#cb11-83"></a><span class="kw">FROM</span> <span class="st">`bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`</span> e,</span>
-<span id="cb11-84"><a href="#cb11-84"></a>UNNEST(e<span class="ch">.</span>items) <span class="kw">AS</span> item</span>
-<span id="cb11-85"><a href="#cb11-85"></a><span class="kw">WHERE</span> e<span class="ch">.</span>event_name <span class="op">=</span> <span class="st">&#39;purchase&#39;</span></span>
-<span id="cb11-86"><a href="#cb11-86"></a>  <span class="kw">AND</span> _TABLE_SUFFIX <span class="kw">BETWEEN</span> <span class="st">&#39;20201201&#39;</span> <span class="kw">AND</span> <span class="st">&#39;20201231&#39;</span></span>
-<span id="cb11-87"><a href="#cb11-87"></a><span class="kw">GROUP</span> <span class="kw">BY</span> event_date, item<span class="ch">.</span>item_name</span>
-<span id="cb11-88"><a href="#cb11-88"></a><span class="kw">ORDER</span> <span class="kw">BY</span> item_rows <span class="kw">DESC</span></span>
-<span id="cb11-89"><a href="#cb11-89"></a><span class="kw">LIMIT</span> <span class="dv">20</span>;</span>
-<span id="cb11-90"><a href="#cb11-90"></a><span class="in">```</span></span>
-<span id="cb11-91"><a href="#cb11-91"></a></span>
-<span id="cb11-92"><a href="#cb11-92"></a><span class="al">![](images/query_2B.png)</span></span>
-<span id="cb11-93"><a href="#cb11-93"></a></span>
-<span id="cb11-94"><a href="#cb11-94"></a><span class="fu">### Explanation:</span></span>
+<span id="cb11-77"><a href="#cb11-77"></a><span class="fu">### Pattern B — Flattening (UNNEST in FROM) for item-level analysis</span></span>
+<span id="cb11-78"><a href="#cb11-78"></a></span>
+<span id="cb11-79"><a href="#cb11-79"></a>This *multiplies rows* (one event can have many items)</span>
+<span id="cb11-80"><a href="#cb11-80"></a></span>
+<span id="cb11-81"><a href="#cb11-81"></a><span class="in">``` sql</span></span>
+<span id="cb11-82"><a href="#cb11-82"></a><span class="co"># Lecture 2.2B — UNNEST(items) to analyze item-level purchase activity</span></span>
+<span id="cb11-83"><a href="#cb11-83"></a><span class="kw">SELECT</span></span>
+<span id="cb11-84"><a href="#cb11-84"></a>  event_date,</span>
+<span id="cb11-85"><a href="#cb11-85"></a>  item<span class="ch">.</span>item_name,</span>
+<span id="cb11-86"><a href="#cb11-86"></a>  <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">AS</span> item_rows</span>
+<span id="cb11-87"><a href="#cb11-87"></a><span class="kw">FROM</span> <span class="st">`bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`</span> e,</span>
+<span id="cb11-88"><a href="#cb11-88"></a>UNNEST(e<span class="ch">.</span>items) <span class="kw">AS</span> item</span>
+<span id="cb11-89"><a href="#cb11-89"></a><span class="kw">WHERE</span> e<span class="ch">.</span>event_name <span class="op">=</span> <span class="st">&#39;purchase&#39;</span></span>
+<span id="cb11-90"><a href="#cb11-90"></a>  <span class="kw">AND</span> _TABLE_SUFFIX <span class="kw">BETWEEN</span> <span class="st">&#39;20201201&#39;</span> <span class="kw">AND</span> <span class="st">&#39;20201231&#39;</span></span>
+<span id="cb11-91"><a href="#cb11-91"></a><span class="kw">GROUP</span> <span class="kw">BY</span> event_date, item<span class="ch">.</span>item_name</span>
+<span id="cb11-92"><a href="#cb11-92"></a><span class="kw">ORDER</span> <span class="kw">BY</span> item_rows <span class="kw">DESC</span></span>
+<span id="cb11-93"><a href="#cb11-93"></a><span class="kw">LIMIT</span> <span class="dv">20</span>;</span>
+<span id="cb11-94"><a href="#cb11-94"></a><span class="in">```</span></span>
 <span id="cb11-95"><a href="#cb11-95"></a></span>
-<span id="cb11-96"><a href="#cb11-96"></a>This query flattens the items array so each purchased product becomes its own row. It then counts how many times each item appears</span>
+<span id="cb11-96"><a href="#cb11-96"></a><span class="al">![](images/query_2B.png)</span></span>
 <span id="cb11-97"><a href="#cb11-97"></a></span>
-<span id="cb11-98"><a href="#cb11-98"></a><span class="fu"># 3. STRING_AGG, ARRAY_AGG (useful aggregations)</span></span>
+<span id="cb11-98"><a href="#cb11-98"></a><span class="fu">### Explanation:</span></span>
 <span id="cb11-99"><a href="#cb11-99"></a></span>
-<span id="cb11-100"><a href="#cb11-100"></a>**What they do:** combine many values into one row per group.</span>
+<span id="cb11-100"><a href="#cb11-100"></a>This query flattens the items array so each purchased product becomes its own row. It then counts how many times each item appears</span>
 <span id="cb11-101"><a href="#cb11-101"></a></span>
-<span id="cb11-102"><a href="#cb11-102"></a><span class="fu">## Example: Build a “session cart summary” (top items a user added to cart)</span></span>
+<span id="cb11-102"><a href="#cb11-102"></a><span class="fu"># 3. STRING_AGG, ARRAY_AGG (useful aggregations)</span></span>
 <span id="cb11-103"><a href="#cb11-103"></a></span>
-<span id="cb11-104"><a href="#cb11-104"></a><span class="in">``` sql</span></span>
-<span id="cb11-105"><a href="#cb11-105"></a><span class="co"># STRING_AGG: list event types seen per day</span></span>
-<span id="cb11-106"><a href="#cb11-106"></a><span class="kw">SELECT</span></span>
-<span id="cb11-107"><a href="#cb11-107"></a>  event_date,</span>
-<span id="cb11-108"><a href="#cb11-108"></a>  STRING_AGG(<span class="kw">DISTINCT</span> event_name, <span class="st">&#39;, &#39;</span> <span class="kw">ORDER</span> <span class="kw">BY</span> event_name) <span class="kw">AS</span> events_seen</span>
-<span id="cb11-109"><a href="#cb11-109"></a><span class="kw">FROM</span> <span class="st">`bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`</span></span>
-<span id="cb11-110"><a href="#cb11-110"></a><span class="kw">WHERE</span> _TABLE_SUFFIX <span class="kw">BETWEEN</span> <span class="st">&#39;20201201&#39;</span> <span class="kw">AND</span> <span class="st">&#39;20201203&#39;</span></span>
-<span id="cb11-111"><a href="#cb11-111"></a><span class="kw">GROUP</span> <span class="kw">BY</span> event_date</span>
-<span id="cb11-112"><a href="#cb11-112"></a><span class="kw">ORDER</span> <span class="kw">BY</span> event_date;</span>
-<span id="cb11-113"><a href="#cb11-113"></a><span class="in">```</span></span>
-<span id="cb11-114"><a href="#cb11-114"></a></span>
-<span id="cb11-115"><a href="#cb11-115"></a><span class="al">![](images/query_3.png)</span></span>
-<span id="cb11-116"><a href="#cb11-116"></a></span>
-<span id="cb11-117"><a href="#cb11-117"></a><span class="fu">### Explanation:</span></span>
+<span id="cb11-104"><a href="#cb11-104"></a>**What they do:** combine many values into one row per group.</span>
+<span id="cb11-105"><a href="#cb11-105"></a></span>
+<span id="cb11-106"><a href="#cb11-106"></a><span class="fu">## Example: Build a “session cart summary” (top items a user added to cart)</span></span>
+<span id="cb11-107"><a href="#cb11-107"></a></span>
+<span id="cb11-108"><a href="#cb11-108"></a><span class="in">``` sql</span></span>
+<span id="cb11-109"><a href="#cb11-109"></a><span class="co"># STRING_AGG: list event types seen per day</span></span>
+<span id="cb11-110"><a href="#cb11-110"></a><span class="kw">SELECT</span></span>
+<span id="cb11-111"><a href="#cb11-111"></a>  event_date,</span>
+<span id="cb11-112"><a href="#cb11-112"></a>  STRING_AGG(<span class="kw">DISTINCT</span> event_name, <span class="st">&#39;, &#39;</span> <span class="kw">ORDER</span> <span class="kw">BY</span> event_name) <span class="kw">AS</span> events_seen</span>
+<span id="cb11-113"><a href="#cb11-113"></a><span class="kw">FROM</span> <span class="st">`bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`</span></span>
+<span id="cb11-114"><a href="#cb11-114"></a><span class="kw">WHERE</span> _TABLE_SUFFIX <span class="kw">BETWEEN</span> <span class="st">&#39;20201201&#39;</span> <span class="kw">AND</span> <span class="st">&#39;20201203&#39;</span></span>
+<span id="cb11-115"><a href="#cb11-115"></a><span class="kw">GROUP</span> <span class="kw">BY</span> event_date</span>
+<span id="cb11-116"><a href="#cb11-116"></a><span class="kw">ORDER</span> <span class="kw">BY</span> event_date;</span>
+<span id="cb11-117"><a href="#cb11-117"></a><span class="in">```</span></span>
 <span id="cb11-118"><a href="#cb11-118"></a></span>
-<span id="cb11-119"><a href="#cb11-119"></a>This query lists all unique event types that happened on each day. It combines them into one comma-separated string per date.</span>
+<span id="cb11-119"><a href="#cb11-119"></a><span class="al">![](images/query_3.png)</span></span>
 <span id="cb11-120"><a href="#cb11-120"></a></span>
-<span id="cb11-121"><a href="#cb11-121"></a><span class="fu">## Use Case 1</span></span>
+<span id="cb11-121"><a href="#cb11-121"></a><span class="fu">### Explanation:</span></span>
 <span id="cb11-122"><a href="#cb11-122"></a></span>
-<span id="cb11-123"><a href="#cb11-123"></a><span class="in">``` sql</span></span>
-<span id="cb11-124"><a href="#cb11-124"></a><span class="co"># ARRAY_AGG: items added to cart per user (list)</span></span>
-<span id="cb11-125"><a href="#cb11-125"></a><span class="kw">SELECT</span></span>
-<span id="cb11-126"><a href="#cb11-126"></a>  user_pseudo_id,</span>
-<span id="cb11-127"><a href="#cb11-127"></a>  ARRAY_AGG(item<span class="ch">.</span>item_name) <span class="kw">AS</span> items_added_to_cart</span>
-<span id="cb11-128"><a href="#cb11-128"></a><span class="kw">FROM</span> <span class="st">`bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`</span>,</span>
-<span id="cb11-129"><a href="#cb11-129"></a>UNNEST(items) <span class="kw">AS</span> item</span>
-<span id="cb11-130"><a href="#cb11-130"></a><span class="kw">WHERE</span> event_name <span class="op">=</span> <span class="st">&#39;add_to_cart&#39;</span></span>
-<span id="cb11-131"><a href="#cb11-131"></a>  <span class="kw">AND</span> _TABLE_SUFFIX <span class="kw">BETWEEN</span> <span class="st">&#39;20201201&#39;</span> <span class="kw">AND</span> <span class="st">&#39;20201231&#39;</span></span>
-<span id="cb11-132"><a href="#cb11-132"></a><span class="kw">GROUP</span> <span class="kw">BY</span> user_pseudo_id</span>
-<span id="cb11-133"><a href="#cb11-133"></a><span class="kw">ORDER</span> <span class="kw">BY</span> user_pseudo_id</span>
-<span id="cb11-134"><a href="#cb11-134"></a><span class="kw">LIMIT</span> <span class="dv">10</span>;</span>
-<span id="cb11-135"><a href="#cb11-135"></a><span class="in">```</span></span>
-<span id="cb11-136"><a href="#cb11-136"></a></span>
-<span id="cb11-137"><a href="#cb11-137"></a><span class="al">![](images/query_3_case1.png)</span></span>
-<span id="cb11-138"><a href="#cb11-138"></a></span>
-<span id="cb11-139"><a href="#cb11-139"></a><span class="fu">### Explanation: </span></span>
+<span id="cb11-123"><a href="#cb11-123"></a>This query lists all unique event types that happened on each day. It combines them into one comma-separated string per date.</span>
+<span id="cb11-124"><a href="#cb11-124"></a></span>
+<span id="cb11-125"><a href="#cb11-125"></a><span class="fu">## Use Case 1</span></span>
+<span id="cb11-126"><a href="#cb11-126"></a></span>
+<span id="cb11-127"><a href="#cb11-127"></a><span class="in">``` sql</span></span>
+<span id="cb11-128"><a href="#cb11-128"></a><span class="co"># ARRAY_AGG: items added to cart per user (list)</span></span>
+<span id="cb11-129"><a href="#cb11-129"></a><span class="kw">SELECT</span></span>
+<span id="cb11-130"><a href="#cb11-130"></a>  user_pseudo_id,</span>
+<span id="cb11-131"><a href="#cb11-131"></a>  ARRAY_AGG(item<span class="ch">.</span>item_name) <span class="kw">AS</span> items_added_to_cart</span>
+<span id="cb11-132"><a href="#cb11-132"></a><span class="kw">FROM</span> <span class="st">`bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`</span>,</span>
+<span id="cb11-133"><a href="#cb11-133"></a>UNNEST(items) <span class="kw">AS</span> item</span>
+<span id="cb11-134"><a href="#cb11-134"></a><span class="kw">WHERE</span> event_name <span class="op">=</span> <span class="st">&#39;add_to_cart&#39;</span></span>
+<span id="cb11-135"><a href="#cb11-135"></a>  <span class="kw">AND</span> _TABLE_SUFFIX <span class="kw">BETWEEN</span> <span class="st">&#39;20201201&#39;</span> <span class="kw">AND</span> <span class="st">&#39;20201231&#39;</span></span>
+<span id="cb11-136"><a href="#cb11-136"></a><span class="kw">GROUP</span> <span class="kw">BY</span> user_pseudo_id</span>
+<span id="cb11-137"><a href="#cb11-137"></a><span class="kw">ORDER</span> <span class="kw">BY</span> user_pseudo_id</span>
+<span id="cb11-138"><a href="#cb11-138"></a><span class="kw">LIMIT</span> <span class="dv">10</span>;</span>
+<span id="cb11-139"><a href="#cb11-139"></a><span class="in">```</span></span>
 <span id="cb11-140"><a href="#cb11-140"></a></span>
-<span id="cb11-141"><a href="#cb11-141"></a>This query creates a list of products each user added to their cart. Each row represents one user and the items they added.</span>
+<span id="cb11-141"><a href="#cb11-141"></a><span class="al">![](images/query_3_case1.png)</span></span>
 <span id="cb11-142"><a href="#cb11-142"></a></span>
-<span id="cb11-143"><a href="#cb11-143"></a><span class="fu">## Use Case 2</span></span>
+<span id="cb11-143"><a href="#cb11-143"></a><span class="fu">### Explanation: </span></span>
 <span id="cb11-144"><a href="#cb11-144"></a></span>
-<span id="cb11-145"><a href="#cb11-145"></a><span class="in">``` sql</span></span>
-<span id="cb11-146"><a href="#cb11-146"></a><span class="co"># Session-level cart summary using ARRAY_AGG + STRUCT</span></span>
-<span id="cb11-147"><a href="#cb11-147"></a><span class="kw">WITH</span> add_to_cart <span class="kw">AS</span> (</span>
-<span id="cb11-148"><a href="#cb11-148"></a>  <span class="kw">SELECT</span></span>
-<span id="cb11-149"><a href="#cb11-149"></a>    user_pseudo_id,</span>
-<span id="cb11-150"><a href="#cb11-150"></a>    (</span>
-<span id="cb11-151"><a href="#cb11-151"></a>      <span class="kw">SELECT</span> value<span class="ch">.</span>int_value</span>
-<span id="cb11-152"><a href="#cb11-152"></a>      <span class="kw">FROM</span> UNNEST(event_params)</span>
-<span id="cb11-153"><a href="#cb11-153"></a>      <span class="kw">WHERE</span> <span class="kw">key</span> <span class="op">=</span> <span class="st">&#39;ga_session_id&#39;</span></span>
-<span id="cb11-154"><a href="#cb11-154"></a>      <span class="kw">LIMIT</span> <span class="dv">1</span></span>
-<span id="cb11-155"><a href="#cb11-155"></a>    ) <span class="kw">AS</span> session_id,</span>
-<span id="cb11-156"><a href="#cb11-156"></a>    TIMESTAMP_MICROS(event_timestamp) <span class="kw">AS</span> event_ts,</span>
-<span id="cb11-157"><a href="#cb11-157"></a>    i<span class="ch">.</span>item_id,</span>
-<span id="cb11-158"><a href="#cb11-158"></a>    i<span class="ch">.</span>item_name,</span>
-<span id="cb11-159"><a href="#cb11-159"></a>    i<span class="ch">.</span>quantity,</span>
-<span id="cb11-160"><a href="#cb11-160"></a>    i<span class="ch">.</span>price</span>
-<span id="cb11-161"><a href="#cb11-161"></a>  <span class="kw">FROM</span> <span class="st">`bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`</span>,</span>
-<span id="cb11-162"><a href="#cb11-162"></a>  UNNEST(items) <span class="kw">AS</span> i</span>
-<span id="cb11-163"><a href="#cb11-163"></a>  <span class="kw">WHERE</span> event_name <span class="op">=</span> <span class="st">&#39;add_to_cart&#39;</span></span>
-<span id="cb11-164"><a href="#cb11-164"></a>    <span class="kw">AND</span> _TABLE_SUFFIX <span class="kw">BETWEEN</span> <span class="st">&#39;20210101&#39;</span> <span class="kw">AND</span> <span class="st">&#39;20211231&#39;</span></span>
-<span id="cb11-165"><a href="#cb11-165"></a>)</span>
-<span id="cb11-166"><a href="#cb11-166"></a><span class="kw">SELECT</span></span>
-<span id="cb11-167"><a href="#cb11-167"></a>  user_pseudo_id,</span>
-<span id="cb11-168"><a href="#cb11-168"></a>  session_id,</span>
-<span id="cb11-169"><a href="#cb11-169"></a>  <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">AS</span> total_add_to_cart_item_rows,</span>
-<span id="cb11-170"><a href="#cb11-170"></a>  ARRAY_AGG(</span>
-<span id="cb11-171"><a href="#cb11-171"></a>    STRUCT(item_id, item_name, quantity, price, event_ts)</span>
-<span id="cb11-172"><a href="#cb11-172"></a>    <span class="kw">ORDER</span> <span class="kw">BY</span> quantity <span class="kw">DESC</span>, event_ts <span class="kw">ASC</span></span>
-<span id="cb11-173"><a href="#cb11-173"></a>    <span class="kw">LIMIT</span> <span class="dv">10</span></span>
-<span id="cb11-174"><a href="#cb11-174"></a>  ) <span class="kw">AS</span> cart_items</span>
-<span id="cb11-175"><a href="#cb11-175"></a><span class="kw">FROM</span> add_to_cart</span>
-<span id="cb11-176"><a href="#cb11-176"></a><span class="kw">WHERE</span> session_id <span class="kw">IS</span> <span class="kw">NOT</span> <span class="kw">NULL</span></span>
-<span id="cb11-177"><a href="#cb11-177"></a><span class="kw">GROUP</span> <span class="kw">BY</span> user_pseudo_id, session_id</span>
-<span id="cb11-178"><a href="#cb11-178"></a><span class="kw">ORDER</span> <span class="kw">BY</span> user_pseudo_id, session_id;</span>
-<span id="cb11-179"><a href="#cb11-179"></a><span class="in">```</span></span>
-<span id="cb11-180"><a href="#cb11-180"></a></span>
-<span id="cb11-181"><a href="#cb11-181"></a><span class="al">![](images/query_3_case2.png)</span></span>
-<span id="cb11-182"><a href="#cb11-182"></a></span>
-<span id="cb11-183"><a href="#cb11-183"></a><span class="fu">### Explanation:</span></span>
+<span id="cb11-145"><a href="#cb11-145"></a>This query creates a list of products each user added to their cart. Each row represents one user and the items they added.</span>
+<span id="cb11-146"><a href="#cb11-146"></a></span>
+<span id="cb11-147"><a href="#cb11-147"></a><span class="fu">## Use Case 2</span></span>
+<span id="cb11-148"><a href="#cb11-148"></a></span>
+<span id="cb11-149"><a href="#cb11-149"></a><span class="in">``` sql</span></span>
+<span id="cb11-150"><a href="#cb11-150"></a><span class="co"># Session-level cart summary using ARRAY_AGG + STRUCT</span></span>
+<span id="cb11-151"><a href="#cb11-151"></a><span class="kw">WITH</span> add_to_cart <span class="kw">AS</span> (</span>
+<span id="cb11-152"><a href="#cb11-152"></a>  <span class="kw">SELECT</span></span>
+<span id="cb11-153"><a href="#cb11-153"></a>    user_pseudo_id,</span>
+<span id="cb11-154"><a href="#cb11-154"></a>    (</span>
+<span id="cb11-155"><a href="#cb11-155"></a>      <span class="kw">SELECT</span> value<span class="ch">.</span>int_value</span>
+<span id="cb11-156"><a href="#cb11-156"></a>      <span class="kw">FROM</span> UNNEST(event_params)</span>
+<span id="cb11-157"><a href="#cb11-157"></a>      <span class="kw">WHERE</span> <span class="kw">key</span> <span class="op">=</span> <span class="st">&#39;ga_session_id&#39;</span></span>
+<span id="cb11-158"><a href="#cb11-158"></a>      <span class="kw">LIMIT</span> <span class="dv">1</span></span>
+<span id="cb11-159"><a href="#cb11-159"></a>    ) <span class="kw">AS</span> session_id,</span>
+<span id="cb11-160"><a href="#cb11-160"></a>    TIMESTAMP_MICROS(event_timestamp) <span class="kw">AS</span> event_ts,</span>
+<span id="cb11-161"><a href="#cb11-161"></a>    i<span class="ch">.</span>item_id,</span>
+<span id="cb11-162"><a href="#cb11-162"></a>    i<span class="ch">.</span>item_name,</span>
+<span id="cb11-163"><a href="#cb11-163"></a>    i<span class="ch">.</span>quantity,</span>
+<span id="cb11-164"><a href="#cb11-164"></a>    i<span class="ch">.</span>price</span>
+<span id="cb11-165"><a href="#cb11-165"></a>  <span class="kw">FROM</span> <span class="st">`bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`</span>,</span>
+<span id="cb11-166"><a href="#cb11-166"></a>  UNNEST(items) <span class="kw">AS</span> i</span>
+<span id="cb11-167"><a href="#cb11-167"></a>  <span class="kw">WHERE</span> event_name <span class="op">=</span> <span class="st">&#39;add_to_cart&#39;</span></span>
+<span id="cb11-168"><a href="#cb11-168"></a>    <span class="kw">AND</span> _TABLE_SUFFIX <span class="kw">BETWEEN</span> <span class="st">&#39;20210101&#39;</span> <span class="kw">AND</span> <span class="st">&#39;20211231&#39;</span></span>
+<span id="cb11-169"><a href="#cb11-169"></a>)</span>
+<span id="cb11-170"><a href="#cb11-170"></a><span class="kw">SELECT</span></span>
+<span id="cb11-171"><a href="#cb11-171"></a>  user_pseudo_id,</span>
+<span id="cb11-172"><a href="#cb11-172"></a>  session_id,</span>
+<span id="cb11-173"><a href="#cb11-173"></a>  <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">AS</span> total_add_to_cart_item_rows,</span>
+<span id="cb11-174"><a href="#cb11-174"></a>  ARRAY_AGG(</span>
+<span id="cb11-175"><a href="#cb11-175"></a>    STRUCT(item_id, item_name, quantity, price, event_ts)</span>
+<span id="cb11-176"><a href="#cb11-176"></a>    <span class="kw">ORDER</span> <span class="kw">BY</span> quantity <span class="kw">DESC</span>, event_ts <span class="kw">ASC</span></span>
+<span id="cb11-177"><a href="#cb11-177"></a>    <span class="kw">LIMIT</span> <span class="dv">10</span></span>
+<span id="cb11-178"><a href="#cb11-178"></a>  ) <span class="kw">AS</span> cart_items</span>
+<span id="cb11-179"><a href="#cb11-179"></a><span class="kw">FROM</span> add_to_cart</span>
+<span id="cb11-180"><a href="#cb11-180"></a><span class="kw">WHERE</span> session_id <span class="kw">IS</span> <span class="kw">NOT</span> <span class="kw">NULL</span></span>
+<span id="cb11-181"><a href="#cb11-181"></a><span class="kw">GROUP</span> <span class="kw">BY</span> user_pseudo_id, session_id</span>
+<span id="cb11-182"><a href="#cb11-182"></a><span class="kw">ORDER</span> <span class="kw">BY</span> user_pseudo_id, session_id;</span>
+<span id="cb11-183"><a href="#cb11-183"></a><span class="in">```</span></span>
 <span id="cb11-184"><a href="#cb11-184"></a></span>
-<span id="cb11-185"><a href="#cb11-185"></a>This query groups add-to-cart activity by user and session. It builds a structured list of the items added in each session, including quantity and price.</span>
+<span id="cb11-185"><a href="#cb11-185"></a><span class="al">![](images/query_3_case2.png)</span></span>
 <span id="cb11-186"><a href="#cb11-186"></a></span>
-<span id="cb11-187"><a href="#cb11-187"></a><span class="fu"># 4. Joins (start with INNER and LEFT)</span></span>
+<span id="cb11-187"><a href="#cb11-187"></a><span class="fu">### Explanation:</span></span>
 <span id="cb11-188"><a href="#cb11-188"></a></span>
-<span id="cb11-189"><a href="#cb11-189"></a>**What it does:** combines results based on matching keys.</span>
+<span id="cb11-189"><a href="#cb11-189"></a>This query groups add-to-cart activity by user and session. It builds a structured list of the items added in each session, including quantity and price.</span>
 <span id="cb11-190"><a href="#cb11-190"></a></span>
-<span id="cb11-191"><a href="#cb11-191"></a><span class="in">``` sql</span></span>
-<span id="cb11-192"><a href="#cb11-192"></a><span class="kw">WITH</span> daily_users <span class="kw">AS</span> (</span>
-<span id="cb11-193"><a href="#cb11-193"></a>  <span class="kw">SELECT</span></span>
-<span id="cb11-194"><a href="#cb11-194"></a>    event_date,</span>
-<span id="cb11-195"><a href="#cb11-195"></a>    <span class="fu">COUNT</span>(<span class="kw">DISTINCT</span> user_pseudo_id) <span class="kw">AS</span> users</span>
-<span id="cb11-196"><a href="#cb11-196"></a>  <span class="kw">FROM</span> <span class="st">`bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`</span></span>
-<span id="cb11-197"><a href="#cb11-197"></a>  <span class="kw">WHERE</span> _TABLE_SUFFIX <span class="kw">BETWEEN</span> <span class="st">&#39;20201201&#39;</span> <span class="kw">AND</span> <span class="st">&#39;20201231&#39;</span></span>
-<span id="cb11-198"><a href="#cb11-198"></a>  <span class="kw">GROUP</span> <span class="kw">BY</span> event_date</span>
-<span id="cb11-199"><a href="#cb11-199"></a>),</span>
-<span id="cb11-200"><a href="#cb11-200"></a>daily_purchases <span class="kw">AS</span> (</span>
-<span id="cb11-201"><a href="#cb11-201"></a>  <span class="kw">SELECT</span></span>
-<span id="cb11-202"><a href="#cb11-202"></a>    event_date,</span>
-<span id="cb11-203"><a href="#cb11-203"></a>    <span class="fu">COUNT</span>(<span class="kw">DISTINCT</span> (</span>
-<span id="cb11-204"><a href="#cb11-204"></a>      <span class="kw">SELECT</span> value<span class="ch">.</span>string_value</span>
-<span id="cb11-205"><a href="#cb11-205"></a>      <span class="kw">FROM</span> UNNEST(event_params)</span>
-<span id="cb11-206"><a href="#cb11-206"></a>      <span class="kw">WHERE</span> <span class="kw">key</span> <span class="op">=</span> <span class="st">&#39;transaction_id&#39;</span></span>
-<span id="cb11-207"><a href="#cb11-207"></a>      <span class="kw">LIMIT</span> <span class="dv">1</span></span>
-<span id="cb11-208"><a href="#cb11-208"></a>    )) <span class="kw">AS</span> purchases</span>
-<span id="cb11-209"><a href="#cb11-209"></a>  <span class="kw">FROM</span> <span class="st">`bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`</span></span>
-<span id="cb11-210"><a href="#cb11-210"></a>  <span class="kw">WHERE</span> event_name <span class="op">=</span> <span class="st">&#39;purchase&#39;</span></span>
-<span id="cb11-211"><a href="#cb11-211"></a>    <span class="kw">AND</span> _TABLE_SUFFIX <span class="kw">BETWEEN</span> <span class="st">&#39;20201201&#39;</span> <span class="kw">AND</span> <span class="st">&#39;20201231&#39;</span></span>
-<span id="cb11-212"><a href="#cb11-212"></a>  <span class="kw">GROUP</span> <span class="kw">BY</span> event_date</span>
-<span id="cb11-213"><a href="#cb11-213"></a>)</span>
-<span id="cb11-214"><a href="#cb11-214"></a><span class="kw">SELECT</span></span>
-<span id="cb11-215"><a href="#cb11-215"></a>  u<span class="ch">.</span>event_date,</span>
-<span id="cb11-216"><a href="#cb11-216"></a>  u<span class="ch">.</span>users,</span>
-<span id="cb11-217"><a href="#cb11-217"></a>  IFNULL(p<span class="ch">.</span>purchases, <span class="dv">0</span>) <span class="kw">AS</span> purchases,</span>
-<span id="cb11-218"><a href="#cb11-218"></a>  <span class="fu">ROUND</span>(IFNULL(p<span class="ch">.</span>purchases, <span class="dv">0</span>) <span class="op">/</span> NULLIF(u<span class="ch">.</span>users, <span class="dv">0</span>) <span class="op">*</span> <span class="dv">100</span>, <span class="dv">2</span>) <span class="kw">AS</span> conversion_rate_pct</span>
-<span id="cb11-219"><a href="#cb11-219"></a><span class="kw">FROM</span> daily_users u</span>
-<span id="cb11-220"><a href="#cb11-220"></a><span class="kw">LEFT</span> <span class="kw">JOIN</span> daily_purchases p</span>
-<span id="cb11-221"><a href="#cb11-221"></a>  <span class="kw">ON</span> u<span class="ch">.</span>event_date <span class="op">=</span> p<span class="ch">.</span>event_date</span>
-<span id="cb11-222"><a href="#cb11-222"></a><span class="kw">ORDER</span> <span class="kw">BY</span> u<span class="ch">.</span>event_date;</span>
-<span id="cb11-223"><a href="#cb11-223"></a><span class="in">```</span></span>
-<span id="cb11-224"><a href="#cb11-224"></a></span>
-<span id="cb11-225"><a href="#cb11-225"></a><span class="al">![](images/query_4.png)</span></span>
-<span id="cb11-226"><a href="#cb11-226"></a></span>
-<span id="cb11-227"><a href="#cb11-227"></a><span class="fu">### Explanation:</span></span>
+<span id="cb11-191"><a href="#cb11-191"></a><span class="fu"># 4. Joins (start with INNER and LEFT)</span></span>
+<span id="cb11-192"><a href="#cb11-192"></a></span>
+<span id="cb11-193"><a href="#cb11-193"></a>**What it does:** combines results based on matching keys.</span>
+<span id="cb11-194"><a href="#cb11-194"></a></span>
+<span id="cb11-195"><a href="#cb11-195"></a><span class="in">``` sql</span></span>
+<span id="cb11-196"><a href="#cb11-196"></a><span class="kw">WITH</span> daily_users <span class="kw">AS</span> (</span>
+<span id="cb11-197"><a href="#cb11-197"></a>  <span class="kw">SELECT</span></span>
+<span id="cb11-198"><a href="#cb11-198"></a>    event_date,</span>
+<span id="cb11-199"><a href="#cb11-199"></a>    <span class="fu">COUNT</span>(<span class="kw">DISTINCT</span> user_pseudo_id) <span class="kw">AS</span> users</span>
+<span id="cb11-200"><a href="#cb11-200"></a>  <span class="kw">FROM</span> <span class="st">`bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`</span></span>
+<span id="cb11-201"><a href="#cb11-201"></a>  <span class="kw">WHERE</span> _TABLE_SUFFIX <span class="kw">BETWEEN</span> <span class="st">&#39;20201201&#39;</span> <span class="kw">AND</span> <span class="st">&#39;20201231&#39;</span></span>
+<span id="cb11-202"><a href="#cb11-202"></a>  <span class="kw">GROUP</span> <span class="kw">BY</span> event_date</span>
+<span id="cb11-203"><a href="#cb11-203"></a>),</span>
+<span id="cb11-204"><a href="#cb11-204"></a>daily_purchases <span class="kw">AS</span> (</span>
+<span id="cb11-205"><a href="#cb11-205"></a>  <span class="kw">SELECT</span></span>
+<span id="cb11-206"><a href="#cb11-206"></a>    event_date,</span>
+<span id="cb11-207"><a href="#cb11-207"></a>    <span class="fu">COUNT</span>(<span class="kw">DISTINCT</span> (</span>
+<span id="cb11-208"><a href="#cb11-208"></a>      <span class="kw">SELECT</span> value<span class="ch">.</span>string_value</span>
+<span id="cb11-209"><a href="#cb11-209"></a>      <span class="kw">FROM</span> UNNEST(event_params)</span>
+<span id="cb11-210"><a href="#cb11-210"></a>      <span class="kw">WHERE</span> <span class="kw">key</span> <span class="op">=</span> <span class="st">&#39;transaction_id&#39;</span></span>
+<span id="cb11-211"><a href="#cb11-211"></a>      <span class="kw">LIMIT</span> <span class="dv">1</span></span>
+<span id="cb11-212"><a href="#cb11-212"></a>    )) <span class="kw">AS</span> purchases</span>
+<span id="cb11-213"><a href="#cb11-213"></a>  <span class="kw">FROM</span> <span class="st">`bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`</span></span>
+<span id="cb11-214"><a href="#cb11-214"></a>  <span class="kw">WHERE</span> event_name <span class="op">=</span> <span class="st">&#39;purchase&#39;</span></span>
+<span id="cb11-215"><a href="#cb11-215"></a>    <span class="kw">AND</span> _TABLE_SUFFIX <span class="kw">BETWEEN</span> <span class="st">&#39;20201201&#39;</span> <span class="kw">AND</span> <span class="st">&#39;20201231&#39;</span></span>
+<span id="cb11-216"><a href="#cb11-216"></a>  <span class="kw">GROUP</span> <span class="kw">BY</span> event_date</span>
+<span id="cb11-217"><a href="#cb11-217"></a>)</span>
+<span id="cb11-218"><a href="#cb11-218"></a><span class="kw">SELECT</span></span>
+<span id="cb11-219"><a href="#cb11-219"></a>  u<span class="ch">.</span>event_date,</span>
+<span id="cb11-220"><a href="#cb11-220"></a>  u<span class="ch">.</span>users,</span>
+<span id="cb11-221"><a href="#cb11-221"></a>  IFNULL(p<span class="ch">.</span>purchases, <span class="dv">0</span>) <span class="kw">AS</span> purchases,</span>
+<span id="cb11-222"><a href="#cb11-222"></a>  <span class="fu">ROUND</span>(IFNULL(p<span class="ch">.</span>purchases, <span class="dv">0</span>) <span class="op">/</span> NULLIF(u<span class="ch">.</span>users, <span class="dv">0</span>) <span class="op">*</span> <span class="dv">100</span>, <span class="dv">2</span>) <span class="kw">AS</span> conversion_rate_pct</span>
+<span id="cb11-223"><a href="#cb11-223"></a><span class="kw">FROM</span> daily_users u</span>
+<span id="cb11-224"><a href="#cb11-224"></a><span class="kw">LEFT</span> <span class="kw">JOIN</span> daily_purchases p</span>
+<span id="cb11-225"><a href="#cb11-225"></a>  <span class="kw">ON</span> u<span class="ch">.</span>event_date <span class="op">=</span> p<span class="ch">.</span>event_date</span>
+<span id="cb11-226"><a href="#cb11-226"></a><span class="kw">ORDER</span> <span class="kw">BY</span> u<span class="ch">.</span>event_date;</span>
+<span id="cb11-227"><a href="#cb11-227"></a><span class="in">```</span></span>
 <span id="cb11-228"><a href="#cb11-228"></a></span>
-<span id="cb11-229"><a href="#cb11-229"></a>This query joins daily user counts with daily purchase counts. It also calculates a daily conversion rate by dividing purchases by users.</span>
+<span id="cb11-229"><a href="#cb11-229"></a><span class="al">![](images/query_4.png)</span></span>
 <span id="cb11-230"><a href="#cb11-230"></a></span>
-<span id="cb11-231"><a href="#cb11-231"></a><span class="fu"># 5. Window functions + QUALIFY</span></span>
+<span id="cb11-231"><a href="#cb11-231"></a><span class="fu">### Explanation:</span></span>
 <span id="cb11-232"><a href="#cb11-232"></a></span>
-<span id="cb11-233"><a href="#cb11-233"></a>**What they do:** calculate “across rows” without collapsing to one row per group.</span>
+<span id="cb11-233"><a href="#cb11-233"></a>This query joins daily user counts with daily purchase counts. It also calculates a daily conversion rate by dividing purchases by users.</span>
 <span id="cb11-234"><a href="#cb11-234"></a></span>
-<span id="cb11-235"><a href="#cb11-235"></a><span class="fu">### Top 3 event types per day (RANK) + QUALIFY</span></span>
+<span id="cb11-235"><a href="#cb11-235"></a><span class="fu"># 5. Window functions + QUALIFY</span></span>
 <span id="cb11-236"><a href="#cb11-236"></a></span>
-<span id="cb11-237"><a href="#cb11-237"></a><span class="in">``` sql</span></span>
-<span id="cb11-238"><a href="#cb11-238"></a><span class="co"># Window + QUALIFY: top 3 event types per day</span></span>
-<span id="cb11-239"><a href="#cb11-239"></a><span class="kw">WITH</span> daily_event_counts <span class="kw">AS</span> (</span>
-<span id="cb11-240"><a href="#cb11-240"></a>  <span class="kw">SELECT</span></span>
-<span id="cb11-241"><a href="#cb11-241"></a>    event_date,</span>
-<span id="cb11-242"><a href="#cb11-242"></a>    event_name,</span>
-<span id="cb11-243"><a href="#cb11-243"></a>    <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">AS</span> events</span>
-<span id="cb11-244"><a href="#cb11-244"></a>  <span class="kw">FROM</span> <span class="st">`bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`</span></span>
-<span id="cb11-245"><a href="#cb11-245"></a>  <span class="kw">WHERE</span> _TABLE_SUFFIX <span class="kw">BETWEEN</span> <span class="st">&#39;20201201&#39;</span> <span class="kw">AND</span> <span class="st">&#39;20201207&#39;</span></span>
-<span id="cb11-246"><a href="#cb11-246"></a>  <span class="kw">GROUP</span> <span class="kw">BY</span> event_date, event_name</span>
-<span id="cb11-247"><a href="#cb11-247"></a>)</span>
-<span id="cb11-248"><a href="#cb11-248"></a><span class="kw">SELECT</span></span>
-<span id="cb11-249"><a href="#cb11-249"></a>  event_date,</span>
-<span id="cb11-250"><a href="#cb11-250"></a>  event_name,</span>
-<span id="cb11-251"><a href="#cb11-251"></a>  events,</span>
-<span id="cb11-252"><a href="#cb11-252"></a>  RANK() OVER (PARTITION <span class="kw">BY</span> event_date <span class="kw">ORDER</span> <span class="kw">BY</span> events <span class="kw">DESC</span>) <span class="kw">AS</span> rnk</span>
-<span id="cb11-253"><a href="#cb11-253"></a><span class="kw">FROM</span> daily_event_counts</span>
-<span id="cb11-254"><a href="#cb11-254"></a>QUALIFY rnk <span class="op">&lt;=</span> <span class="dv">3</span></span>
-<span id="cb11-255"><a href="#cb11-255"></a><span class="kw">ORDER</span> <span class="kw">BY</span> event_date, rnk;</span>
-<span id="cb11-256"><a href="#cb11-256"></a><span class="in">```</span></span>
-<span id="cb11-257"><a href="#cb11-257"></a></span>
-<span id="cb11-258"><a href="#cb11-258"></a><span class="al">![](images/query_5A.png)</span></span>
-<span id="cb11-259"><a href="#cb11-259"></a></span>
-<span id="cb11-260"><a href="#cb11-260"></a><span class="fu">### Explanation:</span></span>
+<span id="cb11-237"><a href="#cb11-237"></a>**What they do:** calculate “across rows” without collapsing to one row per group.</span>
+<span id="cb11-238"><a href="#cb11-238"></a></span>
+<span id="cb11-239"><a href="#cb11-239"></a><span class="fu">### Top 3 event types per day (RANK) + QUALIFY</span></span>
+<span id="cb11-240"><a href="#cb11-240"></a></span>
+<span id="cb11-241"><a href="#cb11-241"></a><span class="in">``` sql</span></span>
+<span id="cb11-242"><a href="#cb11-242"></a><span class="co"># Window + QUALIFY: top 3 event types per day</span></span>
+<span id="cb11-243"><a href="#cb11-243"></a><span class="kw">WITH</span> daily_event_counts <span class="kw">AS</span> (</span>
+<span id="cb11-244"><a href="#cb11-244"></a>  <span class="kw">SELECT</span></span>
+<span id="cb11-245"><a href="#cb11-245"></a>    event_date,</span>
+<span id="cb11-246"><a href="#cb11-246"></a>    event_name,</span>
+<span id="cb11-247"><a href="#cb11-247"></a>    <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">AS</span> events</span>
+<span id="cb11-248"><a href="#cb11-248"></a>  <span class="kw">FROM</span> <span class="st">`bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`</span></span>
+<span id="cb11-249"><a href="#cb11-249"></a>  <span class="kw">WHERE</span> _TABLE_SUFFIX <span class="kw">BETWEEN</span> <span class="st">&#39;20201201&#39;</span> <span class="kw">AND</span> <span class="st">&#39;20201207&#39;</span></span>
+<span id="cb11-250"><a href="#cb11-250"></a>  <span class="kw">GROUP</span> <span class="kw">BY</span> event_date, event_name</span>
+<span id="cb11-251"><a href="#cb11-251"></a>)</span>
+<span id="cb11-252"><a href="#cb11-252"></a><span class="kw">SELECT</span></span>
+<span id="cb11-253"><a href="#cb11-253"></a>  event_date,</span>
+<span id="cb11-254"><a href="#cb11-254"></a>  event_name,</span>
+<span id="cb11-255"><a href="#cb11-255"></a>  events,</span>
+<span id="cb11-256"><a href="#cb11-256"></a>  RANK() OVER (PARTITION <span class="kw">BY</span> event_date <span class="kw">ORDER</span> <span class="kw">BY</span> events <span class="kw">DESC</span>) <span class="kw">AS</span> rnk</span>
+<span id="cb11-257"><a href="#cb11-257"></a><span class="kw">FROM</span> daily_event_counts</span>
+<span id="cb11-258"><a href="#cb11-258"></a>QUALIFY rnk <span class="op">&lt;=</span> <span class="dv">3</span></span>
+<span id="cb11-259"><a href="#cb11-259"></a><span class="kw">ORDER</span> <span class="kw">BY</span> event_date, rnk;</span>
+<span id="cb11-260"><a href="#cb11-260"></a><span class="in">```</span></span>
 <span id="cb11-261"><a href="#cb11-261"></a></span>
-<span id="cb11-262"><a href="#cb11-262"></a>This query ranks event types by how often they occurred each day. It then keeps only the top three events per day.</span>
+<span id="cb11-262"><a href="#cb11-262"></a><span class="al">![](images/query_5A.png)</span></span>
 <span id="cb11-263"><a href="#cb11-263"></a></span>
-<span id="cb11-264"><a href="#cb11-264"></a><span class="fu">### Rolling 7-day average of daily purchases</span></span>
+<span id="cb11-264"><a href="#cb11-264"></a><span class="fu">### Explanation:</span></span>
 <span id="cb11-265"><a href="#cb11-265"></a></span>
-<span id="cb11-266"><a href="#cb11-266"></a><span class="in">``` sql</span></span>
-<span id="cb11-267"><a href="#cb11-267"></a><span class="co"># Rolling 7-day average purchases</span></span>
-<span id="cb11-268"><a href="#cb11-268"></a><span class="kw">WITH</span> daily_purchases <span class="kw">AS</span> (</span>
-<span id="cb11-269"><a href="#cb11-269"></a>  <span class="kw">SELECT</span></span>
-<span id="cb11-270"><a href="#cb11-270"></a>    PARSE_DATE(<span class="st">&#39;%Y%m%d&#39;</span>, event_date) <span class="kw">AS</span> dt,</span>
-<span id="cb11-271"><a href="#cb11-271"></a>    <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">AS</span> purchases</span>
-<span id="cb11-272"><a href="#cb11-272"></a>  <span class="kw">FROM</span> <span class="st">`bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`</span></span>
-<span id="cb11-273"><a href="#cb11-273"></a>  <span class="kw">WHERE</span> event_name <span class="op">=</span> <span class="st">&#39;purchase&#39;</span></span>
-<span id="cb11-274"><a href="#cb11-274"></a>    <span class="kw">AND</span> _TABLE_SUFFIX <span class="kw">BETWEEN</span> <span class="st">&#39;20201201&#39;</span> <span class="kw">AND</span> <span class="st">&#39;20201231&#39;</span></span>
-<span id="cb11-275"><a href="#cb11-275"></a>  <span class="kw">GROUP</span> <span class="kw">BY</span> dt</span>
-<span id="cb11-276"><a href="#cb11-276"></a>)</span>
-<span id="cb11-277"><a href="#cb11-277"></a><span class="kw">SELECT</span></span>
-<span id="cb11-278"><a href="#cb11-278"></a>  dt,</span>
-<span id="cb11-279"><a href="#cb11-279"></a>  purchases,</span>
-<span id="cb11-280"><a href="#cb11-280"></a>  <span class="fu">AVG</span>(purchases) OVER (</span>
-<span id="cb11-281"><a href="#cb11-281"></a>    <span class="kw">ORDER</span> <span class="kw">BY</span> dt</span>
-<span id="cb11-282"><a href="#cb11-282"></a>    ROWS <span class="kw">BETWEEN</span> <span class="dv">6</span> PRECEDING <span class="kw">AND</span> CURRENT ROW</span>
-<span id="cb11-283"><a href="#cb11-283"></a>  ) <span class="kw">AS</span> purchases_7d_avg</span>
-<span id="cb11-284"><a href="#cb11-284"></a><span class="kw">FROM</span> daily_purchases</span>
-<span id="cb11-285"><a href="#cb11-285"></a><span class="kw">ORDER</span> <span class="kw">BY</span> dt;</span>
-<span id="cb11-286"><a href="#cb11-286"></a><span class="in">```</span></span>
-<span id="cb11-287"><a href="#cb11-287"></a></span>
-<span id="cb11-288"><a href="#cb11-288"></a><span class="al">![](images/query_5B.png)</span></span>
-<span id="cb11-289"><a href="#cb11-289"></a></span>
-<span id="cb11-290"><a href="#cb11-290"></a><span class="fu">### Explanation:</span></span>
+<span id="cb11-266"><a href="#cb11-266"></a>This query ranks event types by how often they occurred each day. It then keeps only the top three events per day.</span>
+<span id="cb11-267"><a href="#cb11-267"></a></span>
+<span id="cb11-268"><a href="#cb11-268"></a><span class="fu">### Rolling 7-day average of daily purchases</span></span>
+<span id="cb11-269"><a href="#cb11-269"></a></span>
+<span id="cb11-270"><a href="#cb11-270"></a><span class="in">``` sql</span></span>
+<span id="cb11-271"><a href="#cb11-271"></a><span class="co"># Rolling 7-day average purchases</span></span>
+<span id="cb11-272"><a href="#cb11-272"></a><span class="kw">WITH</span> daily_purchases <span class="kw">AS</span> (</span>
+<span id="cb11-273"><a href="#cb11-273"></a>  <span class="kw">SELECT</span></span>
+<span id="cb11-274"><a href="#cb11-274"></a>    PARSE_DATE(<span class="st">&#39;%Y%m%d&#39;</span>, event_date) <span class="kw">AS</span> dt,</span>
+<span id="cb11-275"><a href="#cb11-275"></a>    <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">AS</span> purchases</span>
+<span id="cb11-276"><a href="#cb11-276"></a>  <span class="kw">FROM</span> <span class="st">`bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`</span></span>
+<span id="cb11-277"><a href="#cb11-277"></a>  <span class="kw">WHERE</span> event_name <span class="op">=</span> <span class="st">&#39;purchase&#39;</span></span>
+<span id="cb11-278"><a href="#cb11-278"></a>    <span class="kw">AND</span> _TABLE_SUFFIX <span class="kw">BETWEEN</span> <span class="st">&#39;20201201&#39;</span> <span class="kw">AND</span> <span class="st">&#39;20201231&#39;</span></span>
+<span id="cb11-279"><a href="#cb11-279"></a>  <span class="kw">GROUP</span> <span class="kw">BY</span> dt</span>
+<span id="cb11-280"><a href="#cb11-280"></a>)</span>
+<span id="cb11-281"><a href="#cb11-281"></a><span class="kw">SELECT</span></span>
+<span id="cb11-282"><a href="#cb11-282"></a>  dt,</span>
+<span id="cb11-283"><a href="#cb11-283"></a>  purchases,</span>
+<span id="cb11-284"><a href="#cb11-284"></a>  <span class="fu">AVG</span>(purchases) OVER (</span>
+<span id="cb11-285"><a href="#cb11-285"></a>    <span class="kw">ORDER</span> <span class="kw">BY</span> dt</span>
+<span id="cb11-286"><a href="#cb11-286"></a>    ROWS <span class="kw">BETWEEN</span> <span class="dv">6</span> PRECEDING <span class="kw">AND</span> CURRENT ROW</span>
+<span id="cb11-287"><a href="#cb11-287"></a>  ) <span class="kw">AS</span> purchases_7d_avg</span>
+<span id="cb11-288"><a href="#cb11-288"></a><span class="kw">FROM</span> daily_purchases</span>
+<span id="cb11-289"><a href="#cb11-289"></a><span class="kw">ORDER</span> <span class="kw">BY</span> dt;</span>
+<span id="cb11-290"><a href="#cb11-290"></a><span class="in">```</span></span>
 <span id="cb11-291"><a href="#cb11-291"></a></span>
-<span id="cb11-292"><a href="#cb11-292"></a>This query calculates daily purchase counts and then computes a rolling 7-day average. It smooths out daily fluctuations to show trends.</span>
+<span id="cb11-292"><a href="#cb11-292"></a><span class="al">![](images/query_5B.png)</span></span>
 <span id="cb11-293"><a href="#cb11-293"></a></span>
-<span id="cb11-294"><a href="#cb11-294"></a><span class="fu"># 6. Approximate functions (performance-minded)</span></span>
+<span id="cb11-294"><a href="#cb11-294"></a><span class="fu">### Explanation:</span></span>
 <span id="cb11-295"><a href="#cb11-295"></a></span>
-<span id="cb11-296"><a href="#cb11-296"></a>**What they do:** return “close enough” answers faster on huge datasets.</span>
+<span id="cb11-296"><a href="#cb11-296"></a>This query calculates daily purchase counts and then computes a rolling 7-day average. It smooths out daily fluctuations to show trends.</span>
 <span id="cb11-297"><a href="#cb11-297"></a></span>
-<span id="cb11-298"><a href="#cb11-298"></a><span class="fu">### Approx distinct users per event type</span></span>
+<span id="cb11-298"><a href="#cb11-298"></a><span class="fu"># 6. Approximate functions (performance-minded)</span></span>
 <span id="cb11-299"><a href="#cb11-299"></a></span>
-<span id="cb11-300"><a href="#cb11-300"></a><span class="in">``` sql</span></span>
-<span id="cb11-301"><a href="#cb11-301"></a><span class="co"># APPROX_COUNT_DISTINCT: fast approx distinct users</span></span>
-<span id="cb11-302"><a href="#cb11-302"></a><span class="kw">SELECT</span></span>
-<span id="cb11-303"><a href="#cb11-303"></a>  event_name,</span>
-<span id="cb11-304"><a href="#cb11-304"></a>  APPROX_COUNT_DISTINCT(user_pseudo_id) <span class="kw">AS</span> approx_users</span>
-<span id="cb11-305"><a href="#cb11-305"></a><span class="kw">FROM</span> <span class="st">`bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`</span></span>
-<span id="cb11-306"><a href="#cb11-306"></a><span class="kw">WHERE</span> _TABLE_SUFFIX <span class="kw">BETWEEN</span> <span class="st">&#39;20201201&#39;</span> <span class="kw">AND</span> <span class="st">&#39;20201231&#39;</span></span>
-<span id="cb11-307"><a href="#cb11-307"></a><span class="kw">GROUP</span> <span class="kw">BY</span> event_name</span>
-<span id="cb11-308"><a href="#cb11-308"></a><span class="kw">ORDER</span> <span class="kw">BY</span> approx_users <span class="kw">DESC</span></span>
-<span id="cb11-309"><a href="#cb11-309"></a><span class="kw">LIMIT</span> <span class="dv">15</span>;</span>
-<span id="cb11-310"><a href="#cb11-310"></a><span class="in">```</span></span>
-<span id="cb11-311"><a href="#cb11-311"></a></span>
-<span id="cb11-312"><a href="#cb11-312"></a><span class="al">![](images/query_6.png)</span></span>
-<span id="cb11-313"><a href="#cb11-313"></a></span>
-<span id="cb11-314"><a href="#cb11-314"></a><span class="fu">### Explanation:</span></span>
+<span id="cb11-300"><a href="#cb11-300"></a>**What they do:** return “close enough” answers faster on huge datasets.</span>
+<span id="cb11-301"><a href="#cb11-301"></a></span>
+<span id="cb11-302"><a href="#cb11-302"></a><span class="fu">### Approx distinct users per event type</span></span>
+<span id="cb11-303"><a href="#cb11-303"></a></span>
+<span id="cb11-304"><a href="#cb11-304"></a><span class="in">``` sql</span></span>
+<span id="cb11-305"><a href="#cb11-305"></a><span class="co"># APPROX_COUNT_DISTINCT: fast approx distinct users</span></span>
+<span id="cb11-306"><a href="#cb11-306"></a><span class="kw">SELECT</span></span>
+<span id="cb11-307"><a href="#cb11-307"></a>  event_name,</span>
+<span id="cb11-308"><a href="#cb11-308"></a>  APPROX_COUNT_DISTINCT(user_pseudo_id) <span class="kw">AS</span> approx_users</span>
+<span id="cb11-309"><a href="#cb11-309"></a><span class="kw">FROM</span> <span class="st">`bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`</span></span>
+<span id="cb11-310"><a href="#cb11-310"></a><span class="kw">WHERE</span> _TABLE_SUFFIX <span class="kw">BETWEEN</span> <span class="st">&#39;20201201&#39;</span> <span class="kw">AND</span> <span class="st">&#39;20201231&#39;</span></span>
+<span id="cb11-311"><a href="#cb11-311"></a><span class="kw">GROUP</span> <span class="kw">BY</span> event_name</span>
+<span id="cb11-312"><a href="#cb11-312"></a><span class="kw">ORDER</span> <span class="kw">BY</span> approx_users <span class="kw">DESC</span></span>
+<span id="cb11-313"><a href="#cb11-313"></a><span class="kw">LIMIT</span> <span class="dv">15</span>;</span>
+<span id="cb11-314"><a href="#cb11-314"></a><span class="in">```</span></span>
 <span id="cb11-315"><a href="#cb11-315"></a></span>
-<span id="cb11-316"><a href="#cb11-316"></a>This query estimates how many unique users triggered each event type. It uses an approximate function to run faster on large datasets.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal><i class="bi"></i></button></div>
+<span id="cb11-316"><a href="#cb11-316"></a><span class="al">![](images/query_6.png)</span></span>
+<span id="cb11-317"><a href="#cb11-317"></a></span>
+<span id="cb11-318"><a href="#cb11-318"></a><span class="fu">### Explanation:</span></span>
+<span id="cb11-319"><a href="#cb11-319"></a></span>
+<span id="cb11-320"><a href="#cb11-320"></a>This query estimates how many unique users triggered each event type. It uses an approximate function to run faster on large datasets.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 

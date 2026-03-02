@@ -20,6 +20,10 @@ execute:
   warning: false
 ---
 
+# Published Version (GitHub Pages)
+
+[View the published HTML on GitHub Pages](https://kathleen-juarez.github.io/IC-CP-W05-BigQuery-SQL-Lecture-2/Juarez_IC-CP-W05-BigQuery-SQL-Lecture%202.html)
+
 # 1. CTEs (WITH) to structure logic
 
 ``` sql
