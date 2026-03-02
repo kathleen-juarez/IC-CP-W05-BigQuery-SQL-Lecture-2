@@ -92,7 +92,17 @@ LIMIT 20;
 ## Use Case 1
 
 ``` sql
+# STRING_AGG: list event types seen per day
+SELECT
+  event_date,
+  STRING_AGG(DISTINCT event_name, ', ' ORDER BY event_name) AS events_seen
+FROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`
+WHERE _TABLE_SUFFIX BETWEEN '20201201' AND '20201203'
+GROUP BY event_date
+ORDER BY event_date;
 ```
+
+![](images/query_3.png)
 
 ## Use Case 2
 
