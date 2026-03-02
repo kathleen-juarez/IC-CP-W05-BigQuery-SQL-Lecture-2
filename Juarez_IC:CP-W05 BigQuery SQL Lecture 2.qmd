@@ -87,9 +87,7 @@ LIMIT 20;
 
 **What they do:** combine many values into one row per group.
 
-### Example: Build a “session cart summary” (top items a user added to cart)
-
-## Use Case 1
+## Example: Build a “session cart summary” (top items a user added to cart)
 
 ``` sql
 # STRING_AGG: list event types seen per day
@@ -104,7 +102,63 @@ ORDER BY event_date;
 
 ![](images/query_3.png)
 
+## Use Case 1
+
+``` sql
+# ARRAY_AGG: items added to cart per user (list)
+SELECT
+  user_pseudo_id,
+  ARRAY_AGG(item.item_name) AS items_added_to_cart
+FROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`,
+UNNEST(items) AS item
+WHERE event_name = 'add_to_cart'
+  AND _TABLE_SUFFIX BETWEEN '20201201' AND '20201231'
+GROUP BY user_pseudo_id
+ORDER BY user_pseudo_id
+LIMIT 10;
+```
+
+![](images/query_3_case1.png)
+
 ## Use Case 2
+
+``` sql
+# Session-level cart summary using ARRAY_AGG + STRUCT
+WITH add_to_cart AS (
+  SELECT
+    user_pseudo_id,
+    (
+      SELECT value.int_value
+      FROM UNNEST(event_params)
+      WHERE key = 'ga_session_id'
+      LIMIT 1
+    ) AS session_id,
+    TIMESTAMP_MICROS(event_timestamp) AS event_ts,
+    i.item_id,
+    i.item_name,
+    i.quantity,
+    i.price
+  FROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`,
+  UNNEST(items) AS i
+  WHERE event_name = 'add_to_cart'
+    AND _TABLE_SUFFIX BETWEEN '20210101' AND '20211231'
+)
+SELECT
+  user_pseudo_id,
+  session_id,
+  COUNT(*) AS total_add_to_cart_item_rows,
+  ARRAY_AGG(
+    STRUCT(item_id, item_name, quantity, price, event_ts)
+    ORDER BY quantity DESC, event_ts ASC
+    LIMIT 10
+  ) AS cart_items
+FROM add_to_cart
+WHERE session_id IS NOT NULL
+GROUP BY user_pseudo_id, session_id
+ORDER BY user_pseudo_id, session_id;
+```
+
+![](images/query_3_case2.png)
 
 # 4. Joins (start with INNER and LEFT)
 
